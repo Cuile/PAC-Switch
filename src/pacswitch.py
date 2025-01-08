@@ -23,8 +23,8 @@ def close_pac_proxy() -> None:
             winreg.FlushKey(key)
             print("PAC关闭成功。")
         except FileNotFoundError:
-            # 如果注册表值已经被删除，则什么也不做
-            pass
+            # 注册表值已经被删除
+            print("PAC设置未找到。")
 
 
 def signal_handler(signum, frame):
