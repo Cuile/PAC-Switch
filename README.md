@@ -10,12 +10,12 @@
 # Nuitka
 > cli.ps1
 > python -m nuitka --mingw64 --standalone --onefile --lto=auto `
+    --no-deployment-flag=self-execution `
     --windows-icon-from-ico=.\resources\icon.ico `
     --output-dir=.\nuitka_build --report=.\nuitka_build\build.xml `
     --remove-output --run `
     .\src\pacswitch.py
 ```
-
 ## Use
 ```powershell
 > pacswitch.exe -h
