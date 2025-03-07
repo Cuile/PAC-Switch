@@ -2,7 +2,9 @@ import argparse
 
 from dynaconf import Dynaconf
 
-parser = argparse.ArgumentParser(prog="pacswitch", description="设置系统PAC脚本")
+parser = argparse.ArgumentParser(
+    prog="pacswitch", description="Set up the system's PAC script"
+)
 parser.add_argument(
     "-c",
     "--conf",
@@ -10,7 +12,7 @@ parser.add_argument(
     dest="conf",
     type=str,
     action="store",
-    help="配置文件路径",
+    help="Configuration file path",
     default=".",
 )
 
