@@ -5,15 +5,10 @@ import winreg
 
 from conf import settings as set
 
-reg_key = winreg.HKEY_CURRENT_USER
-reg_sub_key = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings"
-reg_value_name = "AutoConfigURL"
-pac_script = set.pac_script
-
 
 def open_pac_proxy() -> None:
     with winreg.OpenKey(reg_key, reg_sub_key, 0, winreg.KEY_SET_VALUE) as key:
-        winreg.SetValueEx(key, reg_value_name, 0, winreg.REG_SZ, pac_script)
+        winreg.SetValueEx(key, reg_value_name, 0, winreg.REG_SZ, pac_script)  # type: ignore
         winreg.FlushKey(key)
         print("PAC opens successfully, press any key to exit & close PAC.")
 
@@ -33,6 +28,15 @@ def signal_handler(signum, frame):
 
 
 if __name__ == "__main__":
+    reg_key = winreg.HKEY_CURRENT_USER
+    reg_sub_key = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings"
+    reg_value_name = "AutoConfigURL"
+    try:
+        pac_script = set.pac_script
+    except AttributeError:
+        print("Use -h to view argument settings.")
+        sys.exit()
+
     try:
         signal.signal(signal.SIGTERM, signal_handler)
         open_pac_proxy()
