@@ -20,5 +20,5 @@
 ```powershell
 > pacswitch.exe -h
 # or
-> pacswitch.exe -c .\conf\pac.toml
+> pacswitch.exe -u http://localhost:8000/gfwlist.pac
 ```
