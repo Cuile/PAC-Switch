@@ -1,7 +1,7 @@
 import argparse
-import os
 import signal
 import sys
+import time
 import winreg
 
 
@@ -9,7 +9,7 @@ def open_pac_proxy(pac_script: str) -> None:
     with winreg.OpenKey(reg_key, reg_sub_key, 0, winreg.KEY_SET_VALUE) as key:
         winreg.SetValueEx(key, reg_value_name, 0, winreg.REG_SZ, pac_script)  # type: ignore
         winreg.FlushKey(key)
-        print("PAC opens successfully, press any key to exit & close PAC.")
+        print("PAC opens successfully, press Ctrl + C to close PAC.")
 
 
 def close_pac_proxy() -> None:
@@ -23,7 +23,8 @@ def close_pac_proxy() -> None:
 
 
 def signal_handler(signum, frame):
-    sys.exit()
+    close_pac_proxy()
+    sys.exit(0)
 
 
 if __name__ == "__main__":
@@ -47,12 +48,9 @@ if __name__ == "__main__":
     reg_sub_key = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings"
     reg_value_name = "AutoConfigURL"
 
-    try:
-        signal.signal(signal.SIGTERM, signal_handler)
-        open_pac_proxy(pac_script_url)
-        os.system("pause")
-    except SystemExit:
-        # term信号触发的退出不做处理
-        pass
-    finally:
-        close_pac_proxy()
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    open_pac_proxy(pac_script_url)
+
+    while True:
+        time.sleep(3600)
