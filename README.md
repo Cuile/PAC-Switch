@@ -8,7 +8,6 @@
 > pyinstaller --clean .\pacswitch.spec
 
 # Nuitka
-> cli.ps1
 > python -m nuitka --mingw64 --standalone --onefile --lto=auto `
     --no-deployment-flag=self-execution `
     --windows-icon-from-ico=.\resources\icon.ico `
