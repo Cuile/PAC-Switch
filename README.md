@@ -8,6 +8,7 @@
 > pyinstaller --clean .\pacswitch.spec
 
 # Nuitka
+> conda activate Python3.12 ; Activate.ps1
 > python -m nuitka --mingw64 --standalone --onefile --lto=auto `
     --no-deployment-flag=self-execution `
     --windows-icon-from-ico=.\resources\icon.ico `
